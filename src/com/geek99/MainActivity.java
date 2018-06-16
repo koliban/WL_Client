@@ -30,11 +30,11 @@ public class MainActivity extends Activity{
 					int position, long id) {
 				switch (position) {
 				case 0:
-					break;
-					/*intent =new Intent(MainActivity.this,TableActivity.class);
+					
+					intent =new Intent(MainActivity.this,TableActivity.class);
 					startActivity(intent);
 					break;
-				case 1:
+					/*case 1:
 					intent =new Intent(MainActivity.this,OrderActivity.class);
 					startActivity(intent);
 					break;
