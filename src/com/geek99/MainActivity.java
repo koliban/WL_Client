@@ -30,15 +30,14 @@ public class MainActivity extends Activity{
 					int position, long id) {
 				switch (position) {
 				case 0:
-					
 					intent =new Intent(MainActivity.this,TableActivity.class);
 					startActivity(intent);
 					break;
-					/*case 1:
+					case 1:
 					intent =new Intent(MainActivity.this,OrderActivity.class);
 					startActivity(intent);
 					break;
-				case 2:
+					/*case 2:
 					intent =new Intent(MainActivity.this,UnionActivity.class);
 					startActivity(intent);
 					break;
@@ -49,11 +48,11 @@ public class MainActivity extends Activity{
 				case 4:
 					intent =new Intent(MainActivity.this,PayActivity.class);
 					startActivity(intent);
-					break;
+					break;*/
 				case 5:
 					intent =new Intent(MainActivity.this,UpdateActivity.class);
 					startActivity(intent);
-					break;*/
+					break;
 				default:
 					Toast.makeText(getApplicationContext(), position+"", 1).show();
 					break;

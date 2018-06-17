@@ -32,7 +32,8 @@ public class HttpUtil {
 			if (response.getStatusLine().getStatusCode() == 200) {
 				String result = EntityUtils.toString(response.getEntity());
 				// save SharedPre...
-				result = new String(result.getBytes("iso-8859-1"),"gbk");
+				//result = new String(result.getBytes("iso-8859-1"),"gbk");
+				//post.setHeader("Content-Type","application/x-www-form-urlencoded;charset=gbk");
 				System.out.println(result);
 				return result;
 			}
