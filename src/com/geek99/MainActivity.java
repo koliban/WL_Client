@@ -1,4 +1,4 @@
-package com.geek99;
+ package com.geek99;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -44,11 +44,11 @@ public class MainActivity extends Activity{
 				case 3:
 					intent =new Intent(MainActivity.this,ChangeActivity.class);
 					startActivity(intent);
-					break;
+					break;*/
 				case 4:
 					intent =new Intent(MainActivity.this,PayActivity.class);
 					startActivity(intent);
-					break;*/
+					break;
 				case 5:
 					intent =new Intent(MainActivity.this,UpdateActivity.class);
 					startActivity(intent);
