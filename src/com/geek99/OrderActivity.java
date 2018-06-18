@@ -31,7 +31,6 @@ public class OrderActivity extends Activity{
 	List<Table> tableList;
 	TableAdapter tableAdapter;
 	String ctime;
-	String timeStr;
 	int uid;
 	int persons;
 	EditText numEditText;
@@ -46,7 +45,7 @@ public class OrderActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.order);
-			configUtil = new ConfigUtil(this);
+		configUtil = new ConfigUtil(this);
 		gson = new Gson();
 		dbAdapter = new DbAdapter(this);
 		tableSp = (Spinner)findViewById(R.id.spinner1);
@@ -56,10 +55,8 @@ public class OrderActivity extends Activity{
 		menuListAdapter = new MenuListAdapter();
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
-		timeStr = sdf.format(date);
-		//ctime = sdf.format(date);
-		//System.out.println("timeStr="+ctime);
-		System.out.println("timeStr="+timeStr);
+	 	ctime = sdf.format(date);
+		System.out.println("timeStr="+ctime);
 		String userJson = configUtil.getUserJson();
 		Type type = new TypeToken<User>(){}.getType();
 		User u = gson.fromJson(userJson, type);
@@ -73,6 +70,43 @@ public class OrderActivity extends Activity{
 		lv = (ListView)findViewById(R.id.listView1);
 		lv.setAdapter(menuListAdapter);
 	}
+	public void order(View v){
+		Order o = new Order();
+		o.setCtime(ctime);
+		o.setUid(uid);
+		int index = tableSp.getSelectedItemPosition();
+		Table t = tableList.get(index);
+		o.setTid(t.getTid());
+		persons = Integer.parseInt(numEditText.getText().toString());
+		o.setPersonNum(persons);
+		o.setDesc("desc");
+		o.setList(menuTempList);
+		Gson gson = new Gson();
+		Type type = new TypeToken<Order>(){}.getType();
+		String json = gson.toJson(o, type);	
+		     
+		String url = "http://10.10.10.102:8080/WL_Server/OrderServlet";
+		new MyOrderTask().execute(url,json);
+	}
+	
+	class MyOrderTask extends AsyncTask<String, Integer, String>{
+
+	@Override
+	protected String doInBackground(String... params) {
+		List<NameValuePair> list = new ArrayList<NameValuePair>();
+		NameValuePair p1 = new BasicNameValuePair("order_json", params[1]);
+		list.add(p1);
+		return HttpUtil.doPost(params[0], list);
+	}
+	
+	@Override
+	protected void onPostExecute(String result) {
+		super.onPostExecute(result);
+		Toast.makeText(getApplicationContext(), result, 1).show();
+	}
+	
+}
+	
 	class MenuListAdapter extends BaseAdapter{
 
 		@Override
@@ -180,23 +214,7 @@ class MenuAdapter extends BaseAdapter{
 		ma.notifyDataSetChanged();	
 	}
 	
-	public void order(View v){
-		//Order o = new Order();
-		//o.setCtime(ctime);
-		//o.setUid(uid);
-		//int index = tableSp.getSelectedItemPosition();
-		//Table t = tableList.get(index);
-		//o.setTid(t.getTid());
-		//persons = Integer.parseInt(numEditText.getText().toString());
-		//o.setPersonNum(persons);
-		//o.setDesc("desc");
-		//o.setList(menuTempList);
-		//Gson gson = new Gson();
-		//Type type = new TypeToken<Order>(){}.getType();
-		//String json = gson.toJson(o, type);		
-		//String url = "http://10.0.2.2:8080/WL_Server/OrderServlet";	
-		//new MyOrderTask().execute(url,json);
-	}
+	
 	
 	
 	class TableAdapter extends BaseAdapter{
@@ -256,27 +274,6 @@ class MenuAdapter extends BaseAdapter{
 	}
 	
 	
-	/*class MyOrderTask extends AsyncTask<String, Integer, String>{
-
-		@Override
-		protected String doInBackground(String... params) {
-			List<NameValuePair> list = new ArrayList<NameValuePair>();
-			NameValuePair p1 = new BasicNameValuePair("order_json", params[1]);
-			list.add(p1);
-			return HttpUtil.doPost(params[0], list);
-		}
-		
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			Toast.makeText(getApplicationContext(), result, 1).show();
-		}
-		
-	}
-	
-	
-	
-	*/
 	
 
 	}
