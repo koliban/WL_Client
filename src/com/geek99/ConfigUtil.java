@@ -13,7 +13,6 @@ public class ConfigUtil {
 		return sp.getString(USER_KEY, ""); //获取数据，默认值为空
 	}
 	
-//保存数据
 	public void setUserJson(String userJson) {
 		editor.putString(USER_KEY, userJson);
 		editor.commit();
